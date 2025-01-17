@@ -11,7 +11,7 @@ const cors = require('cors');
 app.use(cors());
 
 // Path to yt-dlp.exe (adjust this if it's in a different location)
-const ytDlpPath = "C:\\Users\\pompk\\Downloads\\yt-dlp.exe";
+const ytDlpPath = "C:\Users\pompk\Downloads\yt-dlp\yt-dlp.exe";
 
 app.get("/download", async (req, res) => {
     const videoUrl = req.query.url;
