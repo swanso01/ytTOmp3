@@ -1,5 +1,5 @@
 const express = require("express");
-const { exec } = require("child_process");
+const { spawn } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
@@ -26,15 +26,22 @@ app.get("/download", async (req, res) => {
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 
     try {
-        // Run yt-dlp.exe from the command line to download and convert video
-        exec(`"${ytDlpPath}" -x --audio-format mp3 -o "${outputPath}" "${videoUrl}"`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-                console.error(`stderr: ${stderr}`);
-                return res.status(500).send(`Error: ${stderr}`);
-            }
+        // Use spawn to execute yt-dlp
+        const ytDlpProcess = spawn(ytDlpPath, ['-x', '--audio-format', 'mp3', '-o', outputPath, videoUrl]);
 
-            console.log(`stdout: ${stdout}`);
+        // Handle output from yt-dlp
+        ytDlpProcess.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        ytDlpProcess.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        ytDlpProcess.on('close', (code) => {
+            if (code !== 0) {
+                return res.status(500).send("Error downloading the video.");
+            }
 
             // Send the MP3 file as a response
             res.download(outputPath, "audio.mp3", (err) => {
