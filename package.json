@@ -1,5 +1,12 @@
 {
   "scripts": {
     "build": "vite build"
-  }
+  },
+  "name": "yttomp3",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
