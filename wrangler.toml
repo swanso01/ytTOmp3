@@ -7,5 +7,4 @@ command = "npm install"
 [env.production]
 workers_dev = true
 account_id = "33c7b5303bebb8171d27b1613a392cf9"
-workers_uri = "your-worker-uri"
 main = "worker1.js"  # <-- This is the entry point script
