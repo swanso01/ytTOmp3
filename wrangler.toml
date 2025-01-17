@@ -1,0 +1,11 @@
+name = "yttomp3"
+type = "javascript"
+
+[build]
+command = "npm install"
+
+[env.production]
+workers_dev = true
+account_id = "your-cloudflare-account-id"
+workers_uri = "your-worker-uri"
+main = "worker1.js"  # <-- This is the entry point script
