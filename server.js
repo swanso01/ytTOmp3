@@ -26,6 +26,9 @@ app.get("/download", async (req, res) => {
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 
     try {
+        // Log the command being executed for debugging
+        console.log(`Running command: ${ytDlpPath} -x --audio-format mp3 -o ${outputPath} ${videoUrl}`);
+
         // Use spawn to execute yt-dlp
         const ytDlpProcess = spawn(ytDlpPath, ['-x', '--audio-format', 'mp3', '-o', outputPath, videoUrl]);
 
